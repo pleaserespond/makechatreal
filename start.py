@@ -107,8 +107,14 @@ def start():
     if not TOKEN:
         log.error('Env variable DISCORD_TOKEN not set')
         return 1
-    intents = discord.Intents.default()
+    intents = discord.Intents()
+    # Needed to read guild name
+    intents.guilds = True
+    # Needed to read list of members
     intents.members = True
+    # Not used right now, possibly for configuration in the future
+    # Note: this only lets the bot read contents of messages that @-mention it
+    # explicitly, but it does receive an event for each message.
     intents.messages = True
     bot = discord.ext.commands.Bot(command_prefix='!', intents=intents)
     log.info('Intents value: %d', bot.intents.value)
